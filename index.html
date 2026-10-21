@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="PLATONE Studio: ปุ่มเดียว เลือกแนวเพลง วัดการกลบกันด้วยโมเดลการได้ยิน จูนเสียงร้องทีละโน้ต และ โดนบี้ เสียงร้องชัดขึ้นโดยไม่ดังขึ้น ในเบราว์เซอร์">
+<meta name="description" content="PLATONE Studio 1.0 Beta: มิกซ์และมาสเตอร์ปุ่มเดียวในเบราว์เซอร์ พร้อม โดนบี้ (DONBEE Surround Sound) เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และเสียงรอบทิศ">
+<script>window.PLATONE_GA='G-PN0E59RHFP';</script>
 <title>PLATONE Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -695,6 +696,150 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
 .sheet{background:var(--panel);border-left-color:rgba(255,255,255,.06)}
 @media (prefers-reduced-motion:reduce){.bgfx .scan,.orb-glow,.orb-ring,#bAura .ob-r2,#bAura .ob-mix i,.orb-dots i,.mix-glow,#bAura small,.strip.sweep::before,.aura-log li.cur i,.orb-status.on i,#bExport.filling .fl::before,#bExport.filling .fl::after,#bAuraExport.filling .fl::before,#bAuraExport.filling .fl::after,.ax{animation:none}.aura-wave,.orb-shock,.glitch{display:none}body.aura-running::after{animation:none}}
 @media (max-width:760px){.onair{display:none}.mixer{padding:12px}}
+/* ===== v8.8 studio monitor (ภาพรวมเพลง) ===== */
+.monitor{position:relative;padding:12px 14px 14px;border-radius:22px;background:linear-gradient(180deg,#1b1b23,#0d0d12);border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 6px rgba(0,0,0,.6),0 24px 50px -24px rgba(0,0,0,.95);display:flex;flex-direction:column;gap:10px}
+.monitor::before,.monitor::after{content:"";position:absolute;top:10px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#5a5a66,#1a1a20 70%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.6)}
+.monitor::before{left:10px}.monitor::after{right:10px}
+.mon-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:0 14px;font:500 11px/1.2 var(--f-mono);letter-spacing:.14em;color:#8A8AA3;text-transform:uppercase}
+.mon-brand{display:flex;align-items:center;gap:8px;color:#F5F5FF;font-weight:600}
+.mon-led{width:8px;height:8px;border-radius:50%;background:#2a2a34;box-shadow:inset 0 1px 1px rgba(0,0,0,.6)}
+.mon-led.on{background:#2EE89A;box-shadow:0 0 8px #2EE89A,0 0 16px rgba(46,232,154,.5)}
+.mon-chip{padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.08);background:#0a0a0e;color:#8A8AA3;letter-spacing:.12em}
+.mon-chip.on{color:#2EE89A;border-color:rgba(46,232,154,.4)}
+.mon-src{color:#00F5FF;letter-spacing:.04em;text-transform:none;font-family:var(--f-body);font-size:12px}
+.mon-sp{flex:1}
+.mon-info b{color:#F5F5FF;font-weight:600}
+.mon-time{display:flex;align-items:baseline;gap:6px;padding:4px 10px;border-radius:8px;background:#050a0c;border:1px solid rgba(0,245,255,.18);box-shadow:inset 0 1px 6px rgba(0,0,0,.9)}
+.mon-time b{font-size:18px;letter-spacing:.06em;color:#00F5FF;text-shadow:0 0 8px rgba(0,245,255,.6);font-variant-numeric:tabular-nums}
+.mon-time small{font-size:11px;letter-spacing:.06em}
+.mon-screen{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(120% 140% at 50% 0%,#0b1a1f,#04080a 60%,#020405);border:1px solid rgba(0,245,255,.14);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.8),inset 0 0 30px rgba(0,0,0,.9),0 0 24px -12px rgba(0,245,255,.5)}
+.mon-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),radial-gradient(130% 110% at 50% 50%,transparent 60%,rgba(0,0,0,.55))}
+#wave{display:block;width:100%;height:150px;cursor:pointer;background:transparent!important;box-shadow:none!important;border-radius:0!important}
+.mon-low{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(200px,260px);gap:10px}
+.mon-panel{position:relative;border-radius:12px;background:linear-gradient(180deg,#06090b,#030506);border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 8px rgba(0,0,0,.9);padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.mon-lab{font:500 10px/1 var(--f-mono);letter-spacing:.18em;color:#8A8AA3;display:flex;justify-content:space-between;gap:6px}
+.mon-lab span{letter-spacing:.06em;color:#4f4f63}
+#monSpec{width:100%;height:96px;display:block}
+#monLR{width:100%;height:96px;display:block}
+.mon-read dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.mon-read dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mon-read dl div:last-child{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:baseline}
+.mon-read dt{font:500 9px/1 var(--f-mono);letter-spacing:.14em;color:#5f5f75}
+.mon-read dd{margin:0;font:500 18px/1.1 var(--f-mono);font-variant-numeric:tabular-nums;color:#2EE89A;text-shadow:0 0 8px rgba(46,232,154,.45)}
+.mon-read dd.hot{color:#FF4D6D;text-shadow:0 0 8px rgba(255,77,109,.5)}
+.mon-note{margin:10px 2px 0}
+@media (max-width:760px){.mon-low{grid-template-columns:minmax(0,1fr) 70px}.mon-read{grid-column:1/-1}.mon-read dl{grid-template-columns:repeat(4,1fr)}.mon-read dl div:last-child{grid-column:auto;flex-direction:column}
+  .mon-info{display:none}#wave{height:120px}.mon-time b{font-size:15px}}
+/* ===== v8.8 console (มิกเซอร์) ===== */
+.console{position:relative;border-radius:24px;padding:10px;background:linear-gradient(180deg,#16161c,#0b0b0f);border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 24px 50px -24px rgba(0,0,0,.95)}
+.mix-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:2px 4px 10px}
+.mix-count{font:500 11px/1 var(--f-mono);letter-spacing:.16em;color:#8A8AA3;padding:7px 9px;border-radius:7px;background:#08080b;border:1px solid rgba(255,255,255,.07)}
+.mix-count b{color:#F5F5FF}
+.mix-nav{flex:1;min-width:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.mix-chip{flex:none;display:flex;align-items:center;gap:6px;height:28px;padding:0 9px;border-radius:7px;border:1px solid rgba(255,255,255,.07);background:#101016;color:#c9c9d6;font-size:12px;max-width:150px}
+.mix-chip i{width:7px;height:7px;border-radius:50%;background:var(--tc);box-shadow:0 0 6px var(--tc);flex:none}
+.mix-chip span{font:500 10px/1 var(--f-mono);color:#6a6a80}
+.mix-chip em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mix-chip:hover{border-color:var(--tc);color:#fff}
+.mix-size{flex:none}.mix-size button{padding:0 12px;height:30px}
+.mix-arrow{width:32px;height:30px;padding:0;font-size:18px;line-height:1}
+.mix-arrow:disabled{opacity:.3}
+.mix-full{height:30px}
+.console .mixer{padding:0;border-radius:14px;background:#08080b;border:1px solid rgba(0,0,0,.6);box-shadow:inset 0 2px 12px rgba(0,0,0,.9);overflow-x:auto;scroll-behavior:auto;scrollbar-width:thin}
+.console .strips{gap:0;counter-reset:ch;align-items:stretch;min-height:100%}
+.console .strip{--sw:146px;width:var(--sw);border-radius:0;border:0;border-right:1px solid #050507;box-shadow:inset 1px 0 0 rgba(255,255,255,.035);padding:20px 10px 12px;gap:10px;
+  background:radial-gradient(circle at 8px 8px,#4a4a56 0 2px,#15151a 2.4px 3.2px,transparent 3.6px),radial-gradient(circle at calc(100% - 8px) 8px,#4a4a56 0 2px,#15151a 2.4px 3.2px,transparent 3.6px),
+    radial-gradient(circle at 8px calc(100% - 11px),#4a4a56 0 2px,#15151a 2.4px 3.2px,transparent 3.6px),radial-gradient(circle at calc(100% - 8px) calc(100% - 11px),#4a4a56 0 2px,#15151a 2.4px 3.2px,transparent 3.6px),
+    linear-gradient(180deg,#1a1a21,#121217 40%,#0f0f14);border-bottom:4px solid var(--tc)}
+.console .strip:not(.bus){counter-increment:ch}
+.console .strip::before{display:none}
+.console .strip.flash{animation:chflash 1s ease-out}
+@keyframes chflash{0%{box-shadow:inset 0 0 0 2px var(--tc),inset 0 0 30px -6px var(--tc)}100%{box-shadow:inset 1px 0 0 rgba(255,255,255,.035)}}
+.console .s-head{flex-direction:column;align-items:center;gap:4px;margin:0;position:relative}
+.s-leds{display:flex;align-items:center;gap:6px;width:62%;margin-bottom:2px}
+.s-leds i{width:8px;height:8px;border-radius:50%;flex:none;background:color-mix(in srgb,var(--tc) 35%,#111);box-shadow:inset 0 1px 1px rgba(0,0,0,.6)}
+.s-leds span{flex:1;height:1px;background:rgba(255,255,255,.1)}
+.strip.sig .led-sig{background:var(--tc);box-shadow:0 0 8px var(--tc),0 0 14px var(--tc)}
+.strip:has(.s[aria-pressed="true"]) .led-st{background:#FFC400;box-shadow:0 0 8px #FFC400}
+.strip:has(.m[aria-pressed="true"]) .led-st{background:#FF4D6D;box-shadow:0 0 8px #FF4D6D}
+.console .s-name{width:100%;text-align:center;font:700 13px/1.2 var(--f-display);letter-spacing:.1em;text-transform:uppercase;padding:3px 4px}
+.console .s-role{margin:0;font-size:11px;color:#8A8AA3;text-align:center;max-width:100%}
+.console .s-role[hidden]{display:block!important;visibility:hidden}
+.s-ch{font:500 9.5px/1 var(--f-mono);letter-spacing:.16em;color:#6a6a80;padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,.08);background:#0a0a0d}
+.console .strip:not(.bus) .s-ch::before{content:"CH " counter(ch)}
+.console .s-x{position:absolute;top:-14px;right:-6px;width:20px;height:20px;font-size:14px;opacity:.45}
+.console .s-x:hover{opacity:1}
+.s-sec{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,.055);box-shadow:0 -1px 0 rgba(0,0,0,.6)}
+.s-lab{font:500 9.5px/1 var(--f-mono);letter-spacing:.2em;color:#5f5f75;text-align:center}
+.console .s-knobs{gap:8px 2px}
+.console .strip .k-dial{width:42px;height:42px}
+.console .strip .k-dial svg{filter:drop-shadow(0 3px 3px rgba(0,0,0,.85))}
+.console .strip .k-track{stroke:rgba(255,255,255,.07);stroke-width:2.4}
+.console .strip .k-val{stroke:var(--tc);stroke-width:2.4;opacity:.85}
+.console .strip .k-cap{fill:#121218;stroke:rgba(255,255,255,.14);stroke-width:1.2}
+.console .strip .k-ptr{stroke:var(--tc);stroke-width:2.4}
+.console .strip .k-lab{font:600 10px/1.2 var(--f-display);letter-spacing:.14em;color:#c9c9d6}
+.console .strip .k-read{font-size:10px;color:#8A8AA3}
+.console .s-tools{gap:5px}
+.console .s-btns{gap:6px;padding-top:10px;border-top:1px solid rgba(255,255,255,.055)}
+.console .s-btns button{height:30px;font:600 10.5px/1 var(--f-display);letter-spacing:.14em;border-radius:6px;background:linear-gradient(180deg,#1f1f27,#141419);border:1px solid rgba(255,255,255,.08);box-shadow:0 2px 0 #050507,inset 0 1px 0 rgba(255,255,255,.06);color:#a9a9bd}
+.console .s-btns button:active{transform:translateY(1px);box-shadow:0 1px 0 #050507}
+.console .s-btns .s[aria-pressed="true"]{background:#FFC400;border-color:#FFC400;color:#141006;box-shadow:0 0 14px -2px rgba(255,196,0,.7),0 2px 0 #6b5200}
+.console .s-btns .m[aria-pressed="true"]{background:#FF4D6D;border-color:#FF4D6D;color:#fff;box-shadow:0 0 14px -2px rgba(255,77,109,.7),0 2px 0 #6b1324}
+.console .s-fader{position:relative;height:210px;gap:12px;padding-left:22px;margin-top:2px}
+.f-scale{position:absolute;left:0;top:8px;bottom:8px;width:22px;pointer-events:none}
+.f-scale span{position:absolute;right:2px;transform:translateY(50%);font:500 8.5px/1 var(--f-mono);color:#5f5f75}
+.f-scale span::after{content:"";position:absolute;right:-6px;top:50%;width:4px;height:1px;background:#3a3a48}
+.console .fader{width:36px;height:100%}
+.console .fader::-webkit-slider-runnable-track{width:8px;background:linear-gradient(90deg,#000,#0c0c10 50%,#000);border-radius:2px;box-shadow:inset 0 1px 4px #000,0 0 0 1px rgba(255,255,255,.04)}
+.console .fader::-webkit-slider-thumb{-webkit-appearance:none;width:36px;height:24px;border-radius:5px;border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(var(--tc),var(--tc)) center/60% 2px no-repeat,repeating-linear-gradient(180deg,transparent 0 3px,rgba(0,0,0,.35) 3px 4px) center/40% 60% no-repeat,linear-gradient(180deg,#5a5a66,#2c2c35 45%,#18181e);
+  box-shadow:0 4px 8px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+.console .fader::-moz-range-track{width:8px;background:#050507;border-radius:2px}
+.console .fader::-moz-range-thumb{width:36px;height:24px;border-radius:5px;border:1px solid rgba(255,255,255,.18);background:linear-gradient(var(--tc),var(--tc)) center/60% 2px no-repeat,linear-gradient(180deg,#5a5a66,#2c2c35 45%,#18181e)}
+.console .meter{width:8px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.8)}
+.console .s-db{align-self:center;min-width:64px;padding:5px 8px;border-radius:6px;background:#050507;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 4px #000;color:#F5F5FF;font-size:12px}
+.console .add-strip{width:146px;border-radius:0;border:0;border-right:1px dashed rgba(255,255,255,.08);background:repeating-linear-gradient(135deg,rgba(255,255,255,.015) 0 10px,transparent 10px 20px)}
+.console .add-strip:hover{background:rgba(0,245,255,.05)}
+.console .strip.bus{position:sticky;right:0;z-index:3;width:156px;border-left:1px solid rgba(0,245,255,.25);box-shadow:-18px 0 24px -12px rgba(0,0,0,.95);
+  background:linear-gradient(180deg,rgba(0,245,255,.07),transparent 30%),linear-gradient(180deg,#1a1a21,#0f0f14)}
+.console .strip.bus .s-head{align-items:flex-start}
+/* compact: narrower channels for many tracks */
+.console.compact .strip{--sw:108px;padding:18px 6px 10px;gap:8px}
+.console.compact .add-strip{width:108px}
+.console.compact .strip .k-dial{width:32px;height:32px}
+.console.compact .strip .k-lab{font-size:9px;letter-spacing:.08em}
+.console.compact .strip .k-read{font-size:9px}
+.console.compact .s-name{font-size:11px;letter-spacing:.05em}
+.console.compact .s-lab{font-size:8.5px;letter-spacing:.1em}
+.console.compact .s-nr{font-size:10.5px;padding:0 4px;gap:4px}
+.console.compact .s-btns button{font-size:9.5px;letter-spacing:.06em}
+.console.compact .s-fader{height:170px;padding-left:18px;gap:8px}
+.console.compact .f-scale{width:18px}
+.console.compact .fader{width:30px}
+.console.compact .s-db{min-width:0;font-size:11px;padding:4px 6px}
+.console.compact .strip.bus{width:120px}
+/* full screen */
+.console:fullscreen,.console.full{position:fixed;inset:0;z-index:70;border-radius:0;padding:14px;overflow:auto;display:flex;flex-direction:column}
+.console:fullscreen .mixer,.console.full .mixer{flex:1}
+@media (max-width:760px){.console{padding:8px;border-radius:18px}.mix-nav{order:5;flex-basis:100%}.mix-full{display:none}}
+@media (prefers-reduced-motion:reduce){.console .strip.flash{animation:none}}
+.bus-meter{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,.055)}
+#busLR{width:56px;height:240px;align-self:center;display:block}
+@media (max-width:760px){.console .strip.bus{position:static;box-shadow:none}#busLR{height:180px}}
+.dob-en{font-size:.62em;font-weight:600;color:var(--muted);letter-spacing:.02em;text-transform:none}
+.dob-sub{display:block;font-style:normal;font:600 11px/1.3 var(--f-mono);letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin:2px 0 4px}
+.ver{font-family:var(--f-mono);color:var(--accent)}
+.pv{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(5,5,8,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pv[hidden]{display:none}
+.pv-box{width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.pv-box h2{margin:0;font-size:20px}
+.pv-box p{margin:0 0 10px;font-size:13.5px;line-height:1.65;color:#c9c9d6}
+.pv-box p b{color:var(--fg)}
+.pv-act{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.pv-act .btn{min-width:120px;justify-content:center;text-align:center}
 </style>
 
 <div class="bgfx" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="grid"></i><i class="scan"></i><canvas id="bgNet"></canvas><i class="noise"></i><i class="lines"></i></div>
@@ -703,7 +848,7 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
 <body>
 <header class="bar">
   <div class="wrap">
-    <div class="brand"><span class="mark" aria-hidden="true"></span><div><h1>PLATONE</h1><p>สตูดิโอมิกซ์ แต่งเสียงร้อง และมาสเตอร์ในเบราว์เซอร์ · v8.6 (21 ต.ค.)</p></div></div>
+    <div class="brand"><span class="mark" aria-hidden="true"></span><div><h1>PLATONE</h1><p>สตูดิโอมิกซ์ แต่งเสียงร้อง และมาสเตอร์ในเบราว์เซอร์ · <span class="ver">v1.0 Beta</span></p></div></div>
     <div class="transport">
       <button class="btn icon" id="bStop" aria-label="หยุดและกลับไปต้นเพลง"><svg viewBox="0 0 10 10"><rect x="1" y="1" width="8" height="8" rx="1"/></svg></button>
       <button class="btn primary play" id="bPlay"><svg viewBox="0 0 10 10" id="playIco"><path d="M2 1l7 4-7 4z"/></svg><span id="playTxt">เล่น</span></button>
@@ -729,10 +874,24 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
   <div class="wrap">
     <section>
       <div class="sec-h"><h2>ภาพรวมเพลง</h2><p>คลิกที่คลื่นเสียงเพื่อเลื่อนตำแหน่ง · Space เล่น/หยุด</p></div>
-      <div class="timeline">
-        <canvas id="wave" aria-label="คลื่นเสียงรวมของทุกแทร็ก"></canvas>
-        <p class="note" id="demoNote">กำลังสร้างเพลงตัวอย่าง…</p>
+      <div class="monitor" id="monitor">
+        <div class="mon-top">
+          <span class="mon-brand"><i class="mon-led" id="monLed" aria-hidden="true"></i>PLATONE · MONITOR</span>
+          <span class="mon-chip" id="monState">STOP</span>
+          <span class="mon-chip mon-src" id="monSrc" title="สิ่งที่กำลังได้ยิน">มิกซ์</span>
+          <span class="mon-sp"></span>
+          <span class="mon-info"><b id="monTracks">0</b> TRACKS · 44.1 kHz</span>
+          <span class="mon-time"><b id="monTime">00:00.0</b><small id="monDur">/ 00:00.0</small></span>
+        </div>
+        <div class="mon-screen"><canvas id="wave" aria-label="คลื่นเสียงรวมของทุกแทร็ก คลิกเพื่อเลื่อนตำแหน่ง"></canvas></div>
+        <div class="mon-low">
+          <div class="mon-panel mon-spec"><div class="mon-lab">SPECTRUM <span>30 Hz – 18 kHz</span></div><canvas id="monSpec" aria-label="สเปกตรัมของเสียงที่กำลังฟัง"></canvas></div>
+          <div class="mon-panel mon-lrp"><div class="mon-lab">L/R <span>dBFS</span></div><canvas id="monLR" aria-label="ระดับเสียงซ้ายขวา"></canvas></div>
+          <div class="mon-panel mon-read"><div class="mon-lab">LOUDNESS <span>BS.1770</span></div>
+            <dl><div><dt>MOMENTARY</dt><dd id="monM">–</dd></div><div><dt>SHORT-TERM</dt><dd id="monS">–</dd></div><div><dt>INTEGRATED</dt><dd id="monI">–</dd></div><div><dt>TRUE PEAK</dt><dd id="monTP">–</dd></div><div><dt>PHASE</dt><dd id="monC">–</dd></div></dl></div>
+        </div>
       </div>
+      <p class="note mon-note" id="demoNote">กำลังสร้างเพลงตัวอย่าง…</p>
     </section>
 
     <section id="auraSec">
@@ -765,7 +924,7 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
     </section>
 
     <section id="dobSec">
-      <div class="sec-h"><h2>โดนบี้</h2><p>เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และเสียงรอบทิศบนหูฟัง หรือมิติกว้างขึ้นบนลำโพง ใส่เป็นขั้นสุดท้ายก่อนออกเสียง</p></div>
+      <div class="sec-h"><h2>โดนบี้ <span class="dob-en">(Surround Sound)</span></h2><p>เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และเสียงรอบทิศบนหูฟัง หรือมิติกว้างขึ้นบนลำโพง ใส่เป็นขั้นสุดท้ายก่อนออกเสียง</p></div>
       <div class="card dob">
         <div class="dob-logo">
           <svg viewBox="0 0 420 300" role="img" aria-label="โลโก้โดนบี้: ลำโพงกดบี้แมลงจนแบน">
@@ -776,10 +935,10 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
             <path d="M164 72 H256 L304 222 H116 Z" fill="#FF00E5" stroke="#F5F5FF" stroke-width="7" stroke-linejoin="round"/>
             <g stroke="#00F5FF" stroke-width="9" stroke-linecap="round" fill="none"><path d="M92 120 Q66 160 92 200"/><path d="M62 98 Q24 160 62 222"/><path d="M328 120 Q354 160 328 200"/><path d="M358 98 Q396 160 358 222"/></g>
           </svg>
-          <div><b>โดนบี้</b><span>บี้เสียงกวน เหลือแต่เสียงชัด</span></div>
+          <div><b>โดนบี้</b><i class="dob-sub">DONBEE Surround Sound</i><span>บี้เสียงกวน เหลือแต่เสียงชัด</span></div>
         </div>
         <div class="dob-ctl">
-          <div class="cl-row"><button class="cl-tog" id="bClear" aria-pressed="true" aria-describedby="clHint"><span class="cl-dot" aria-hidden="true"></span>ชัด</button><span class="cl-txt">เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และลดเสียงรบกวนด้วย AI (RNNoise) เมื่อจำเป็น</span></div>
+          <div class="cl-row"><button class="cl-tog" id="bClarity" aria-pressed="true" aria-describedby="clHint"><span class="cl-dot" aria-hidden="true"></span>ชัด</button><span class="cl-txt">เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และลดเสียงรบกวนด้วย AI (RNNoise) เมื่อจำเป็น</span></div>
           <p class="hint cl-hint" id="clHint" aria-live="polite"></p>
           <div><div class="lab" id="lDob">โหมดมิติเสียง</div><div class="seg" id="dobMode" role="group" aria-labelledby="lDob"><button data-v="off">ปิด</button><button data-v="hp">หูฟัง · รอบทิศ</button><button data-v="spk">ลำโพง · กว้าง</button></div></div>
           <label class="dob-amt" for="dobAmt"><span>ความแรง</span><input type="range" id="dobAmt" min="0" max="100" step="5" value="60"><output id="dobAmtV" for="dobAmt">60%</output></label>
@@ -791,7 +950,16 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
 
     <section>
       <div class="sec-h"><h2>มิกเซอร์</h2><p>ลากปุ่มหมุนขึ้นลง · Shift ปรับละเอียด · ดับเบิลคลิกรีเซ็ต</p><span class="sp"></span><button class="linkbtn" id="bClear">ลบทุกแทร็ก</button></div>
-      <div class="mixer"><div class="strips" id="strips"></div></div>
+      <div class="console" id="console">
+        <div class="mix-bar">
+          <span class="mix-count"><b id="mixCount">0</b> CH</span>
+          <div class="mix-nav" id="mixNav" role="group" aria-label="ไปที่แทร็ก"></div>
+          <div class="seg mix-size" id="mixSize" role="group" aria-label="ขนาดแชนแนล"><button data-v="normal" aria-pressed="true">ปกติ</button><button data-v="compact" aria-pressed="false">กะทัดรัด</button></div>
+          <button class="btn mix-arrow" id="mixPrev" aria-label="เลื่อนไปซ้าย">‹</button><button class="btn mix-arrow" id="mixNext" aria-label="เลื่อนไปขวา">›</button>
+          <button class="btn mix-full" id="mixFull" aria-pressed="false">เต็มจอ</button>
+        </div>
+        <div class="mixer" id="mixer"><div class="strips" id="strips"></div></div>
+      </div>
     </section>
 
     <div class="adv-row"><button class="btn" id="bAdv" aria-pressed="false">โหมดขั้นสูง</button><span class="hint">แสดงแร็กมาสเตอร์สำหรับปรับเองต่อจาก PLATONE (คนทั่วไปไม่ต้องใช้)</span></div>
@@ -875,7 +1043,7 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
 </main>
 
 <footer class="credits"><div class="wrap">
-  <div class="cr-main"><b>PLATONE</b><span>สร้างโดย <a href="https://www.facebook.com/T.Muzsic" target="_blank" rel="noopener">T-Muz</a> · แจกฟรี</span></div>
+  <div class="cr-main"><b>PLATONE</b><span>สร้างโดย <a href="https://www.facebook.com/T.Muzsic" target="_blank" rel="noopener">T-Muz</a> · แจกฟรี · v1.0 Beta · <button class="linkbtn" id="bPrivacy">ความเป็นส่วนตัว</button></span></div>
   <p>ทุกอย่างประมวลผลในเครื่องของคุณ ไฟล์เสียงไม่ถูกอัปโหลดไปที่ใด · โปรดใช้กับเพลงที่คุณมีสิทธิ์ เช่น เพลงของคุณเอง หรือเพลงที่ได้รับอนุญาตแล้ว</p>
   <details><summary>งานวิจัยและมาตรฐานที่ PLATONE ใช้</summary><ul>
     <li>วัดความดังและ True Peak: ITU-R BS.1770-4 และ EBU R128</li>
@@ -896,6 +1064,17 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
     <li>เลือกบีบรายแทร็กก่อนลิมิตทั้งเพลง: W. Campbell, J. Paterson และ I. van der Linde (2017) J. Audio Eng. Soc. 65(7/8)</li>
   </ul></details>
 </div></footer>
+<div class="pv" id="pv" hidden>
+  <div class="pv-box" role="dialog" aria-modal="true" aria-labelledby="pvT" aria-describedby="pvD">
+    <h2 id="pvT">ความเป็นส่วนตัวของข้อมูล</h2>
+    <div id="pvD">
+      <p><b>ไฟล์เสียงของคุณไม่ออกจากเครื่อง</b> การมิกซ์ มาสเตอร์ โดนบี้ และการลดเสียงรบกวนด้วย AI ทำงานในเบราว์เซอร์ของคุณทั้งหมด ไม่มีการอัปโหลดเพลงหรือเสียงไปที่เซิร์ฟเวอร์ใด</p>
+      <p>หน้านี้จำการตั้งค่าเล็กๆ ไว้ในเบราว์เซอร์ของคุณเท่านั้น เช่น โหมดขั้นสูง ขนาดแชนแนล และคำตอบของหน้าต่างนี้</p>
+      <p class="pv-ga" hidden><b>นับจำนวนผู้ใช้ (ถ้าคุณยอมรับ):</b> เราใช้ Google Analytics เพื่อดูว่ามีคนใช้กี่คน Google จะได้ข้อมูลการเข้าชม เช่น หน้าที่เปิด อุปกรณ์ เบราว์เซอร์ ประเทศหรือเมืองโดยประมาณ และใช้คุกกี้ของ Google · ไม่มีชื่อไฟล์หรือเสียงของคุณส่งไปด้วย · ถ้าไม่ยอมรับ แอปยังใช้ได้ครบทุกอย่าง และเปลี่ยนใจได้ทุกเมื่อที่ลิงก์ "ความเป็นส่วนตัว" ท้ายหน้า</p>
+    </div>
+    <div class="pv-act"><button class="btn" id="pvNo" hidden>ไม่ยอมรับ</button><button class="btn primary" id="pvYes">เข้าใจแล้ว</button></div>
+  </div>
+</div>
 <div class="room" id="room" hidden>
   <div class="room-box" role="dialog" aria-modal="true" aria-labelledby="roomTitle" aria-describedby="roomSub">
     <div class="room-h">
@@ -944,7 +1123,7 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
     </div>
     <div class="room-cmp"><div class="lab" id="lRoomCmp">ฟังเทียบ</div><div class="seg" id="roomCmp" role="group" aria-labelledby="lRoomCmp"><button data-v="before">ก่อน PLATONE</button><button data-v="after" aria-pressed="true">หลัง PLATONE</button><button data-v="dob">หลังใส่ โดนบี้</button></div><p class="hint" id="roomCmpHint"></p></div>
     <div class="room-dob">
-      <div class="rd-head"><svg class="dob-mark" viewBox="0 0 420 300" aria-hidden="true"><g stroke="#00F5FF" stroke-width="7" stroke-linecap="round" fill="none"><path d="M150 250 L128 280"/><path d="M210 254 L210 286"/><path d="M270 250 L292 280"/><path d="M84 224 Q62 196 40 204"/><path d="M96 218 Q88 188 64 184"/></g><ellipse cx="212" cy="240" rx="108" ry="20" fill="#00F5FF"/><circle cx="96" cy="237" r="23" fill="#00F5FF"/><g stroke="#050508" stroke-width="4" stroke-linecap="round"><path d="M84 230 L94 240 M94 230 L84 240"/><path d="M101 230 L111 240 M111 230 L101 240"/></g><rect x="172" y="10" width="76" height="62" rx="12" fill="#FF00E5" stroke="#F5F5FF" stroke-width="7"/><path d="M164 72 H256 L304 222 H116 Z" fill="#FF00E5" stroke="#F5F5FF" stroke-width="7" stroke-linejoin="round"/><g stroke="#00F5FF" stroke-width="9" stroke-linecap="round" fill="none"><path d="M92 120 Q66 160 92 200"/><path d="M62 98 Q24 160 62 222"/><path d="M328 120 Q354 160 328 200"/><path d="M358 98 Q396 160 358 222"/></g></svg><div><b>โดนบี้</b><span>ขั้นสุดท้ายหลังมาสเตอร์ · <em>ชัด</em>: เสียงร้องชัดขึ้นโดยไม่ดังขึ้น ลดเสียงรบกวนด้วย AI เมื่อจำเป็น · <em>หูฟัง</em>: จำลองลำโพง 4 ตัวรอบตัวให้เสียงออกนอกหัว · <em>ลำโพง</em>: ขยายมิติให้กว้างขึ้น เบสกับเสียงร้องอยู่ที่เดิม · ปรับโทนและความดังให้เท่าเดิมอัตโนมัติ</span></div></div>
+      <div class="rd-head"><svg class="dob-mark" viewBox="0 0 420 300" aria-hidden="true"><g stroke="#00F5FF" stroke-width="7" stroke-linecap="round" fill="none"><path d="M150 250 L128 280"/><path d="M210 254 L210 286"/><path d="M270 250 L292 280"/><path d="M84 224 Q62 196 40 204"/><path d="M96 218 Q88 188 64 184"/></g><ellipse cx="212" cy="240" rx="108" ry="20" fill="#00F5FF"/><circle cx="96" cy="237" r="23" fill="#00F5FF"/><g stroke="#050508" stroke-width="4" stroke-linecap="round"><path d="M84 230 L94 240 M94 230 L84 240"/><path d="M101 230 L111 240 M111 230 L101 240"/></g><rect x="172" y="10" width="76" height="62" rx="12" fill="#FF00E5" stroke="#F5F5FF" stroke-width="7"/><path d="M164 72 H256 L304 222 H116 Z" fill="#FF00E5" stroke="#F5F5FF" stroke-width="7" stroke-linejoin="round"/><g stroke="#00F5FF" stroke-width="9" stroke-linecap="round" fill="none"><path d="M92 120 Q66 160 92 200"/><path d="M62 98 Q24 160 62 222"/><path d="M328 120 Q354 160 328 200"/><path d="M358 98 Q396 160 358 222"/></g></svg><div><b>โดนบี้ <small class="dob-en">(Surround Sound)</small></b><i class="dob-sub">DONBEE Surround Sound</i><span>ขั้นสุดท้ายหลังมาสเตอร์ · <em>ชัด</em>: เสียงร้องชัดขึ้นโดยไม่ดังขึ้น ลดเสียงรบกวนด้วย AI เมื่อจำเป็น · <em>หูฟัง</em>: จำลองลำโพง 4 ตัวรอบตัวให้เสียงออกนอกหัว · <em>ลำโพง</em>: ขยายมิติให้กว้างขึ้น เบสกับเสียงร้องอยู่ที่เดิม · ปรับโทนและความดังให้เท่าเดิมอัตโนมัติ</span></div></div>
       <div class="cl-row"><button class="cl-tog" id="bRoomClear" aria-pressed="true" aria-describedby="roomClHint"><span class="cl-dot" aria-hidden="true"></span>ชัด</button><span class="cl-txt">เสียงร้องชัดขึ้นโดยไม่ดังขึ้น (ใช้ตอนส่งออก Master ด้วย)</span></div>
       <p class="hint cl-hint" id="roomClHint" aria-live="polite"></p>
       <div><div class="lab" id="lRoomDob">โหมดมิติเสียง (ใช้ตอนส่งออก Master ด้วย)</div><div class="seg" id="roomDobMode" role="group" aria-labelledby="lRoomDob"><button data-v="off">ปิด</button><button data-v="hp">หูฟัง · รอบทิศ</button><button data-v="spk">ลำโพง · กว้าง</button></div></div>
@@ -3489,12 +3668,12 @@ const addStrip=document.createElement('button');addStrip.className='add-strip';a
 addStrip.onclick=()=>$('#fileIn').click();stripsEl.appendChild(addStrip);
 function renderStrip(t){
   const el=document.createElement('div');el.className='strip';el.style.setProperty('--tc',t.color);
-  el.innerHTML=`<div class="s-head"><input class="s-name" id="nm${t.id}" aria-label="ชื่อแทร็ก"><button class="s-x" aria-label="ลบแทร็ก">×</button></div><div class="s-role" hidden></div><div class="s-knobs"></div><div class="s-tools"><button class="s-nr" data-tool="nr" title="ล้างเสียงรบกวน"><i></i><span>ล้างเสียง</span></button><button class="s-nr" data-tool="vx" title="จูนและแต่งเสียงร้อง"><i></i><span>แต่งเสียงร้อง</span></button></div><div class="s-fx"><div class="fx-slots"></div><button class="fx-add" type="button" title="ใส่ปลั๊กอินให้แทร็กนี้">+ ปลั๊กอิน</button></div><div class="s-btns"><button class="m" aria-pressed="false" title="ปิดเสียง">M</button><button class="s" aria-pressed="false" title="ฟังเดี่ยว">S</button></div><div class="s-fader"><input type="range" class="fader" id="fd${t.id}" min="-60" max="6" step="0.1" aria-label="ระดับเสียง"><div class="meter"><div class="cover"></div><div class="clip"></div></div></div><div class="s-db"></div>`;
-  const nm=el.querySelector('.s-name');nm.value=t.name;nm.oninput=()=>{t.name=nm.value;if(nrT===t)$('#nrTrack').textContent=t.name;};
+  el.innerHTML=`<div class="s-head"><div class="s-leds" aria-hidden="true"><i class="led-sig"></i><span></span><i class="led-st"></i></div><input class="s-name" id="nm${t.id}" aria-label="ชื่อแทร็ก"><div class="s-role" hidden></div><div class="s-ch" aria-hidden="true"></div><button class="s-x" aria-label="ลบแทร็ก" title="ลบแทร็กนี้">×</button></div><div class="s-sec"><div class="s-lab">EQ · 3 BAND</div><div class="s-knobs s-eq"></div></div><div class="s-sec"><div class="s-lab">DYN · SEND · PAN</div><div class="s-knobs s-dyn"></div></div><div class="s-tools"><button class="s-nr" data-tool="nr" title="ล้างเสียงรบกวน"><i></i><span>ล้างเสียง</span></button><button class="s-nr" data-tool="vx" title="จูนและแต่งเสียงร้อง"><i></i><span>แต่งเสียงร้อง</span></button></div><div class="s-fx"><div class="fx-slots"></div><button class="fx-add" type="button" title="ใส่ปลั๊กอินให้แทร็กนี้">+ ปลั๊กอิน</button></div><div class="s-btns"><button class="m" aria-pressed="false" title="ปิดเสียง">MUTE</button><button class="s" aria-pressed="false" title="ฟังเดี่ยว">SOLO</button></div><div class="s-fader"><div class="f-scale" aria-hidden="true">${[6,0,-6,-12,-24,-40,-60].map(v=>`<span style="bottom:${((v+60)/66*100).toFixed(1)}%">${v>0?'+'+v:v===-60?'−∞':v<0?'−'+(-v):v}</span>`).join('')}</div><input type="range" class="fader" id="fd${t.id}" min="-60" max="6" step="0.1" aria-label="ระดับเสียง"><div class="meter"><div class="cover"></div><div class="clip"></div></div></div><div class="s-db"></div>`;
+  const nm=el.querySelector('.s-name');nm.value=t.name;nm.oninput=()=>{t.name=nm.value;if(nrT===t)$('#nrTrack').textContent=t.name;mixNav();};
   el.querySelector('.s-x').onclick=()=>removeTrack(t);
-  const kn=el.querySelector('.s-knobs');
+  const kEq=el.querySelector('.s-eq'),kDyn=el.querySelector('.s-dyn'),DYNK=['comp','send','pan'];
   const up=()=>{applyTrack(viewParams(t),t.n,ctx,false,anySolo());userMixEdit();};
-  t.k={};const K=(key,o)=>{const k=knob({...o,value:t[key],onInput:v=>{t[key]=v;up();}});t.k[key]=k;kn.appendChild(k.el);};
+  t.k={};const K=(key,o)=>{const k=knob({...o,value:t[key],onInput:v=>{t[key]=v;up();}});t.k[key]=k;(DYNK.includes(key)?kDyn:kEq).appendChild(k.el);};
   K('high',{label:'High',min:-12,max:12,def:0,step:0.5,fmt:fmtDb,bipolar:true});
   K('hpf',{label:'Low cut',min:20,max:800,def:20,log:true,fmt:v=>v<=21?'ปิด':fmtHz(v)});
   K('mid',{label:'Mid',min:-12,max:12,def:0,step:0.5,fmt:fmtDb,bipolar:true});
@@ -3938,9 +4117,9 @@ function clText(){const A=S.aura;if(!S.dob.clear)return 'ปิดอยู่';
   out.push(`ความดังของเสียงร้องเท่าเดิม (ชดเชย ${fmtDb(cl.makeup)} dB)`);
   return out.join(' · ');}
 function clHint(){const t=clText();['#clHint','#roomClHint'].forEach(q=>{const h=$(q);if(h&&h.textContent!==t)h.textContent=t;});
-  ['#bClear','#bRoomClear'].forEach(q=>{const b=$(q);if(b)b.setAttribute('aria-pressed',!!S.dob.clear);});}
+  ['#bClarity','#bRoomClear'].forEach(q=>{const b=$(q);if(b)b.setAttribute('aria-pressed',!!S.dob.clear);});}
 function clSet(on){S.dob.clear=!!on;if(on)S.dob.engaged=true;initAudio();clHint();clApply();if(on)clCompute();if(ROOM.open)roomSyncDob();}
-function clUI(){[$('#bClear'),$('#bRoomClear')].forEach(b=>{if(b)b.onclick=()=>clSet(!S.dob.clear);});clHint();}
+function clUI(){[$('#bClarity'),$('#bRoomClear')].forEach(b=>{if(b)b.onclick=()=>clSet(!S.dob.clear);});clHint();}
 /* ---------- ห้องฟัง (v8.6): after PLATONE, listen to the result through a chosen device, try โดนบี้, then export the Master.
    The device is the listening simulator (heard only, never exported); โดนบี้ goes into the file when it is ticked. ---------- */
 const ROOMDEV={hp:{n:'หูฟัง',sim:'off',dob:'hp',d:'ฟังตรงๆ ไม่จำลองอะไรเพิ่ม เหมาะกับหูฟังที่คุณใส่อยู่'},
@@ -4218,15 +4397,34 @@ function fmtT(s,short){const m=Math.floor(s/60),r=s-m*60;return short?`${m}:${St
 function drawWave(){
   const cv=$('#wave'),{w,h}=fit(cv),d=window.devicePixelRatio||1;
   [wvA,wvB].forEach((oc,ix)=>{oc.width=cv.width;oc.height=cv.height;const g=oc.getContext('2d');g.setTransform(d,0,0,d,0,0);
-    g.clearRect(0,0,w,h);const mid=(h-14)/2;
-    if(peaks){g.fillStyle=ix?C.accent:C.muted;g.globalAlpha=ix?1:0.45;const bw=w/peaks.length;
-      for(let i=0;i<peaks.length;i++){const a=Math.max(0.5,peaks[i]*mid*0.95);g.fillRect(i*bw,mid-a,Math.max(1,bw-0.3),a*2);}g.globalAlpha=1;}
-    if(!ix){const dur=duration();g.fillStyle=C.muted;g.font='10px "IBM Plex Mono",monospace';g.textBaseline='bottom';
-      if(dur){const stp=dur>240?30:dur>90?10:5;for(let s=0;s<=dur;s+=stp){const x=s/dur*w;g.fillRect(x,h-14,1,4);if(x<w-30)g.fillText(fmtT(s,true),x+3,h);}}}
+    g.clearRect(0,0,w,h);const mid=(h-16)/2,dur=duration();
+    if(!ix){ // monitor grid: centre line, ±6/±12 dB guides, a line every ruler step
+      g.strokeStyle='rgba(0,245,255,.07)';g.lineWidth=1;[0.5,0.25,0.75].forEach(f=>{const y=Math.round((h-16)*f)+0.5;g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke();});
+      if(dur){const stp=dur>240?30:dur>90?10:5;for(let t=stp;t<dur;t+=stp){const x=Math.round(t/dur*w)+0.5;g.beginPath();g.moveTo(x,0);g.lineTo(x,h-16);g.stroke();}}}
+    if(peaks){const bw=w/peaks.length;
+      if(ix){const gr=g.createLinearGradient(0,0,0,h-16);gr.addColorStop(0,'#FF00E5');gr.addColorStop(0.5,'#00F5FF');gr.addColorStop(1,'#FF00E5');g.fillStyle=gr;g.shadowColor='rgba(0,245,255,.55)';g.shadowBlur=6;}
+      else{g.fillStyle='rgba(0,245,255,.26)';}
+      for(let i=0;i<peaks.length;i++){const a=Math.max(0.5,peaks[i]*mid*0.92);g.fillRect(i*bw,mid-a,Math.max(1,bw-0.6),a*2);}g.shadowBlur=0;}
+    if(!ix){g.fillStyle='rgba(0,245,255,.55)';g.font='10px "JetBrains Mono","IBM Plex Mono",monospace';g.textBaseline='bottom';
+      if(dur){const stp=dur>240?30:dur>90?10:5;for(let s=0;s<=dur;s+=stp){const x=s/dur*w;g.fillRect(x,h-15,1,4);if(x<w-30)g.fillText(fmtT(s,true),x+3,h);}}}
   });
 }
 $('#wave').addEventListener('click',e=>{if(!S.tracks.length)return;initAudio();const r=e.currentTarget.getBoundingClientRect();seek((e.clientX-r.left)/r.width*duration());});
-function afterTracksChanged(){computePeaks();drawWave();}
+function afterTracksChanged(){computePeaks();drawWave();mixNav();}
+/* v8.8 console: a chip per channel (click to jump there), channel size, scroll buttons, full screen; the mix bus stays pinned on the right */
+function mixNav(){const nav=$('#mixNav');if(!nav)return;$('#mixCount').textContent=S.tracks.length;nav.innerHTML='';
+  S.tracks.forEach((t,i)=>{const b=document.createElement('button');b.className='mix-chip';b.style.setProperty('--tc',t.color);b.title=t.name;b.innerHTML=`<i></i><span>${i+1}</span><em></em>`;b.querySelector('em').textContent=t.name;
+    b.onclick=()=>{if(!t.el)return;const m=$('#mixer'),r=t.el.getBoundingClientRect(),mr=m.getBoundingClientRect();m.scrollBy({left:r.left-mr.left-12,behavior:'smooth'});t.el.classList.remove('flash');void t.el.offsetWidth;t.el.classList.add('flash');};nav.appendChild(b);});}
+{const m=$('#mixer'),con=$('#console'),setSize=v=>{con.classList.toggle('compact',v==='compact');$('#mixSize').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));try{localStorage.setItem('platone.mixSize',v);}catch(e){}};
+  $('#mixSize').querySelectorAll('button').forEach(b=>b.onclick=()=>setSize(b.dataset.v));let v0='normal';try{v0=localStorage.getItem('platone.mixSize')||'normal';}catch(e){}setSize(v0);
+  const page=d=>m.scrollBy({left:d*m.clientWidth*0.8,behavior:'smooth'});$('#mixPrev').onclick=()=>page(-1);$('#mixNext').onclick=()=>page(1);
+  const arrows=()=>{const can=m.scrollWidth>m.clientWidth+4;$('#mixPrev').disabled=!can||m.scrollLeft<4;$('#mixNext').disabled=!can||m.scrollLeft>m.scrollWidth-m.clientWidth-4;};
+  m.addEventListener('scroll',arrows,{passive:true});new ResizeObserver(arrows).observe(m);new MutationObserver(arrows).observe($('#strips'),{childList:true});
+  const fs=()=>document.fullscreenElement===con||con.classList.contains('full');
+  $('#mixFull').onclick=async()=>{if(fs()){if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});con.classList.remove('full');}
+    else{try{await con.requestFullscreen();}catch(e){con.classList.add('full');}}const on=fs();$('#mixFull').setAttribute('aria-pressed',on);$('#mixFull').textContent=on?'ออกจากเต็มจอ':'เต็มจอ';};
+  document.addEventListener('fullscreenchange',()=>{const on=fs();$('#mixFull').setAttribute('aria-pressed',on);$('#mixFull').textContent=on?'ออกจากเต็มจอ':'เต็มจอ';});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&con.classList.contains('full')){con.classList.remove('full');$('#mixFull').setAttribute('aria-pressed',false);$('#mixFull').textContent='เต็มจอ';}});}
 let specSize=null;
 new ResizeObserver(()=>{drawWave();drawReport();drawAuraMap();drawMaskMap();}).observe($('#wave'));
 new ResizeObserver(()=>{specSize=null;}).observe($('#spec'));
@@ -4245,10 +4443,11 @@ function frame(now){
   el.clock.innerHTML=`${fmtT(Math.min(pos,dur))} <span>/ ${fmtT(dur)}</span>`;
   const cv=$('#wave'),g=cv.getContext('2d'),d=window.devicePixelRatio||1;
   g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,cv.width,cv.height);g.drawImage(wvA,0,0);
-  if(dur){const x=pos/dur*cv.width;g.save();g.beginPath();g.rect(0,0,x,cv.height);g.clip();g.drawImage(wvB,0,0);g.restore();g.fillStyle=C.fg;g.fillRect(Math.round(x),0,Math.max(1,d),cv.height-14*d);}
+  if(dur){const x=pos/dur*cv.width;g.save();g.beginPath();g.rect(0,0,x,cv.height);g.clip();g.drawImage(wvB,0,0);g.restore();g.fillStyle='#F5F5FF';g.shadowColor='#00F5FF';g.shadowBlur=10*d;g.fillRect(Math.round(x),0,Math.max(1,d*1.5),cv.height-16*d);g.shadowBlur=0;}
+  monClock(pos,dur);
   if(!ctx)return;
   S.tracks.forEach(t=>{t.n.an.getFloatTimeDomainData(t.n.buf);let p=0;for(const s of t.n.buf){const a=Math.abs(s);if(a>p)p=a;}
-    t.mv=Math.max(dbFrac(gToDb(p)),t.mv-0.018);setMeter(t.cover,t.mv);
+    t.mv=Math.max(dbFrac(gToDb(p)),t.mv-0.018);setMeter(t.cover,t.mv);const sig=t.mv>0.35;if(sig!==t.sigOn){t.sigOn=sig;t.el.classList.toggle('sig',sig);}
     if(p>=0.999)t.clipT=now;t.clipEl.classList.toggle('on',now-t.clipT<1500);});
   if(!tl){tl=new Float32Array(2048);tr=new Float32Array(2048);}
   live.aL.getFloatTimeDomainData(tl);live.aR.getFloatTimeDomainData(tr);
@@ -4266,8 +4465,37 @@ function frame(now){
     const cr=clamp(M.corr,-1,1);el.corrDot.style.left=((cr+1)/2*100)+'%';el.corrV.textContent=(cr>=0?'+':'−')+Math.abs(cr).toFixed(2);
     [['comp',live.comp],['lim',live.lim],['cL',live.cL],['cM',live.cM],['cH',live.cH]].forEach(([k,n])=>{const r=S.ab||auraAfter()?0:Math.min(0,n.reduction);if(GR[k]){GR[k].fill.style.width=clamp(-r/12,0,1)*100+'%';GR[k].txt.textContent=fmtDb(r)+' dB';}});
   }
-  drawSpec();
+  drawSpec();monTick(now);
 }
+/* ---------- v8.8 studio monitor (overview): time, transport state, what you hear, spectrum, L/R meters, loudness ---------- */
+const MON={sp:null,lr:null,bands:null,hold:null,lrHold:[0,0],t:0,last:''};
+function monClock(pos,dur){const t=$('#monTime');if(!t)return;t.textContent=fmtT(Math.min(pos,dur||0));const dd=$('#monDur'),dv='/ '+fmtT(dur||0);if(dd.textContent!==dv)dd.textContent=dv;
+  const st=S.playing?'PLAY':'STOP';if(MON.last!==st){MON.last=st;$('#monState').textContent=st;$('#monState').classList.toggle('on',S.playing);$('#monLed').classList.toggle('on',S.playing);}
+  const n=String(S.tracks.length);if($('#monTracks').textContent!==n)$('#monTracks').textContent=n;}
+function monSource(){if(S.refOn&&S.ref)return 'เพลงอ้างอิง';if(!(S.aura&&S.auraOn))return S.ab?'มิกซ์ (A/B)':'มิกซ์';if(S.auraAB==='before')return 'ก่อน PLATONE';
+  const d=S.dobByp?'':[S.dob.clear&&S.aura.cl&&S.aura.cl.buf?'ชัด':'',S.dob.mode!=='off'?DOBN[S.dob.mode]:''].filter(Boolean).join(' + ');return 'PLATONE'+(d?' + โดนบี้ '+d:'');}
+function monTick(now){const sc=$('#monSpec');if(!sc||!live||!sc.offsetWidth)return;
+  if(!MON.sp)MON.sp=fit(sc);if(!MON.lr)MON.lr=fit($('#monLR'));const bc=$('#busLR');if(!MON.bus&&bc&&bc.offsetWidth)MON.bus=fit(bc);
+  const an=live.spec,nb=48,bins=an.frequencyBinCount;if(!MON.buf||MON.buf.length!==bins)MON.buf=new Float32Array(bins);if(!MON.bands){MON.bands=new Float32Array(nb).fill(-100);MON.hold=new Float32Array(nb).fill(-100);}
+  an.getFloatFrequencyData(MON.buf);const sr=ctx.sampleRate,{g,w,h}=MON.sp,bw=w/nb;g.clearRect(0,0,w,h);
+  g.fillStyle='rgba(0,245,255,.06)';for(let y=0;y<h;y+=Math.max(6,h/8))g.fillRect(0,Math.round(y),w,1);
+  const top=h-2,dy=v=>clamp((v+90)/78,0,1)*top;
+  for(let b=0;b<nb;b++){const f0=30*Math.pow(600,b/nb),f1=30*Math.pow(600,(b+1)/nb),i0=Math.max(1,Math.floor(f0/(sr/2)*bins)),i1=Math.max(i0+1,Math.ceil(f1/(sr/2)*bins));
+    let m=-140;for(let i=i0;i<i1&&i<bins;i++)if(MON.buf[i]>m)m=MON.buf[i];m+=3*Math.log2((f0+f1)/2/1000);if(!S.playing)m=-140;
+    MON.bands[b]=m>MON.bands[b]?m:MON.bands[b]-1.2;MON.hold[b]=MON.bands[b]>MON.hold[b]?MON.bands[b]:MON.hold[b]-0.35;
+    const y=dy(MON.bands[b]),x=b*bw+1,ww=Math.max(1,bw-2);
+    const gr=g.createLinearGradient(0,h,0,0);gr.addColorStop(0,'#00F5FF');gr.addColorStop(0.75,'#7C3AED');gr.addColorStop(1,'#FF00E5');g.fillStyle=gr;
+    for(let yy=0;yy<y;yy+=4)g.fillRect(x,h-yy-3,ww,3);
+    const hy=dy(MON.hold[b]);if(hy>2){g.fillStyle='#F5F5FF';g.fillRect(x,h-hy-1,ww,1.5);}}
+  // L/R: segment bars with peak hold, the same levels as the master meter (monitor and the mix bus strip)
+  [MON.lr,MON.bus].forEach(cv=>{if(!cv)return;const {g,w,h}=cv,v=[mL,mR],segH=4,n=Math.floor(h/segH);g.clearRect(0,0,w,h);const cw=(w-10)/2;
+    v.forEach((x,c)=>{if(!S.playing)x=0;const hk=cv===MON.lr?c:c+2;MON.lrHold[hk]=x>(MON.lrHold[hk]||0)?x:Math.max(0,(MON.lrHold[hk]||0)-0.004);const lit=Math.round(x*n),hd=Math.round(MON.lrHold[hk]*n),x0=4+c*(cw+2);
+      for(let k=0;k<n;k++){const f=k/n,on=k<lit;g.fillStyle=on?(f>0.94?'#FF4D6D':f>0.8?'#F5B84B':'#2EE89A'):'rgba(255,255,255,.05)';g.fillRect(x0,h-(k+1)*segH+1,cw,segH-1);}
+      if(hd>0){g.fillStyle='#F5F5FF';g.fillRect(x0,h-hd*segH,cw,1.5);}});});
+  if(now-MON.t>200){MON.t=now;const src=monSource();if($('#monSrc').textContent!==src)$('#monSrc').textContent=src;
+    if(meterLive){const M=meterLive,lu=v=>isFinite(v)&&v>-70?v.toFixed(1):'–';$('#monM').textContent=lu(M.momentary());$('#monS').textContent=lu(M.shortTerm());$('#monI').textContent=lu(M.integrated());
+      const tp=M.truePeak();$('#monTP').textContent=isFinite(tp)&&tp>-70?tp.toFixed(1):'–';$('#monTP').classList.toggle('hot',tp>-1);const cr=clamp(M.corr,-1,1);$('#monC').textContent=(cr>=0?'+':'−')+Math.abs(cr).toFixed(2);$('#monC').classList.toggle('hot',cr<0);}}}
+{const ro=new ResizeObserver(()=>{MON.sp=null;MON.lr=null;MON.bus=null;});ro.observe($('#monitor'));ro.observe($('#console'));}
 function drawSpec(){
   const cv=$('#spec');if(!specSize)specSize=fit(cv);
   const {g,w,h}=specSize,an=live.spec;if(!fbuf)fbuf=new Float32Array(an.frequencyBinCount);
@@ -4354,7 +4582,7 @@ async function doExport(o){o=o&&o.mode?o:{};const MODE=o.mode||$('#expMode').val
     const lufs=info.lufs+trim,tp=info.tp+trim;
     st.textContent='กำลังเข้ารหัส WAV…';await new Promise(r=>setTimeout(r,20));
     const wav=encodeWav(L,R,sr,bits),base=`platone-${mode==='aura'?'master':mode==='master'?'rack-master':'mix'}-${bits}bit`;
-    const rep=[`PLATONE Studio · รายงานการส่งออก`,`ไฟล์: ${base}.wav`,mode==='aura'?`PLATONE: ${DEST[S.aura.dest].name}${S.aura.genre&&S.aura.genre!=='auto'?' · แนว'+GENRE[S.aura.genre].n:''} · ความเข้ม${INT[S.aura.int].name}`:'',mode==='aura'&&twOn()?'ปรับต่อ: '+TWC.filter(([k])=>Math.abs(S.aura.tk[k]-TWDEF[k])>1e-6).map(([k,lab,,,,f])=>lab+' '+f(S.aura.tk[k])).join(', '):'',fxSummary(),`วันที่: ${new Date().toLocaleString('th-TH')}`,`รูปแบบ: WAV PCM ${bits}-bit 44.1 kHz สเตอริโอ`,
+    const rep=[`PLATONE Studio 1.0 Beta · รายงานการส่งออก`,`ไฟล์: ${base}.wav`,mode==='aura'?`PLATONE: ${DEST[S.aura.dest].name}${S.aura.genre&&S.aura.genre!=='auto'?' · แนว'+GENRE[S.aura.genre].n:''} · ความเข้ม${INT[S.aura.int].name}`:'',mode==='aura'&&twOn()?'ปรับต่อ: '+TWC.filter(([k])=>Math.abs(S.aura.tk[k]-TWDEF[k])>1e-6).map(([k,lab,,,,f])=>lab+' '+f(S.aura.tk[k])).join(', '):'',fxSummary(),`วันที่: ${new Date().toLocaleString('th-TH')}`,`รูปแบบ: WAV PCM ${bits}-bit 44.1 kHz สเตอริโอ`,
       `ความยาว: ${fmtT(len/sr)}`,`Integrated loudness: ${lufs.toFixed(1)} LUFS`,`True peak: ${tp.toFixed(1)} dBTP`,`Loudness range: ${info.lra.toFixed(1)} LU`,
       `PLR: ${(tp-lufs).toFixed(1)} dB`,dobOn?`โดนบี้: ${DOBN[S.dob.mode]} ความแรง ${Math.round(S.dob.amt*100)}%`:'',clD?`โดนบี้ · ชัด: ${clText()}`:clOn?`โดนบี้ · ชัด: ไม่ได้ใส่ (${clText()})`:'',trim?`ลดระดับเพื่อกัน True Peak: ${trim.toFixed(2)} dB`:'',`วัดตาม ITU-R BS.1770-4 / EBU R128`].filter(Boolean).join('\n');
     const tj=mode!=='master'&&S.amix&&!S.amix.stale?traceJson():null;
@@ -4859,7 +5087,7 @@ function roleChip(r){const tr=r.trace&&r.trace.role,t=S.tracks.find(x=>x.id===r.
   const c=tr.conf,cls=c>=0.8?'hi':c>=0.6?'mid':'lo',alt=tr.cands[1];
   return `<span class="rc ${cls}" title="${escA(confLabel(c)+(tr.why.length?': '+tr.why.join(' · '):''))}">${c<0.6?'ไม่แน่ใจ ':''}${pc0(c)}</span>${alt&&alt.p>=0.2?`<small class="ralt">หรือ${ROLES[alt.r].n} ${pc0(alt.p)}</small>`:''}`;}
 function traceJson(){const A=S.amix;if(!A)return null;
-  return JSON.stringify({app:'PLATONE Studio v8.4',kind:'mix-trace',created:new Date().toISOString(),note:'roles are rule-based guesses (not a trained model); numbers are measured on this song',
+  return JSON.stringify({app:'PLATONE Studio 1.0 Beta',kind:'mix-trace',created:new Date().toISOString(),note:'roles are rule-based guesses (not a trained model); numbers are measured on this song',
     genre:A.genre,intensity:A.I,keepBalance:!!A.keep,lar:A.lar||null,reverb:A.rev||null,sideMidMix:A.smMix,widen:A.widen,skipped:A.skipped||[],
     tracks:A.rows.filter(r=>r.trace).map(r=>({...r.trace,gain:r.gain,pan:r.pan,hpf:r.hpf}))},null,1);}
 async function saveTraceJson(){const j=traceJson();if(!j)return;const data=new TextEncoder().encode(j),fn='platone-mix-trace.json',dl=await getDL();
@@ -5401,7 +5629,7 @@ addEventListener('resize',()=>{if(fxW.ui&&fxW.ui.redraw)fxW.ui.redraw();});
 
 /* ---- mix bus strip (after the tracks, before PLATONE) ---- */
 {const el=document.createElement('div');el.className='strip bus';el.style.setProperty('--tc','#00F5FF');
-  el.innerHTML=`<div class="s-head"><b class="bus-t">มิกซ์บัส</b></div><p class="bus-d">ทุกแทร็กและรีเวิร์บรวมกันตรงนี้ ก่อนเข้า PLATONE และมาสเตอร์</p><div class="s-fx"><div class="fx-slots"></div><button class="fx-add" type="button">+ ปลั๊กอิน</button></div>`;
+  el.innerHTML=`<div class="s-head"><b class="bus-t">มิกซ์บัส</b></div><p class="bus-d">ทุกแทร็กและรีเวิร์บรวมกันตรงนี้ ก่อนเข้า PLATONE และมาสเตอร์</p><div class="s-fx"><div class="fx-slots"></div><button class="fx-add" type="button">+ ปลั๊กอิน</button></div><div class="bus-meter"><div class="s-lab">OUT · L R</div><canvas id="busLR" aria-label="ระดับเสียงขาออกซ้ายขวา"></canvas><div class="s-lab">→ PLATONE · MASTER</div></div>`;
   stripsEl.appendChild(el);fxStripInit(BUS,el);}
 
 function fxSummary(){const rows=[...S.tracks,BUS].filter(fxActive).map(o=>`${o===BUS?'มิกซ์บัส':o.name}: ${o.fx.filter(f=>f.on).map(f=>FXT[f.type].n).join(' → ')}`);return rows.length?'ปลั๊กอิน: '+rows.join(' · '):'';}
@@ -5500,6 +5728,22 @@ addEventListener('resize',()=>{if(MASC.show&&RM.matches)mascDraw(performance.now
 if(/(^|[#&])qa\b/.test(location.hash))window.__PLATONE_QA={S,runAura,renderSong,luOf,ROLES,KW,PROTECT,runDSP,roleInfer,roleEvidence,roleParams,guessRole,guessRoleV83,mixTrace,traceJson,addTrack,removeTrack,loadFiles,afterTracksChanged,undoAuraMix,renderAuraRes,getCtx:()=>ctx,dobBuild,dobCalib,dobRender,dobApply,dobParams,dobPink,dobBandE,dobLufs,DOBC,doExport,openRoom,closeRoom,ROOM,clPool,clCompute,clApply,clVocal,clExcerpt,clQuick,clClar,clStoi,clResample,clText,clGain,clWLLat,CLW,vocalTracks,getLive:()=>live,play,pause,buildMaster,applyMaster,clDelay,clRackLat};
 /* ---------- boot ---------- */
 readC();renderMaster();renderStyles();buildNR();buildVX();renderAuraUI();dobUI();roomUI();clUI();
+/* ---------- 1.0 Beta: privacy notice; Google Analytics (G-PN0E59RHFP) loads only after the visitor agrees, and only where the page is
+   built with it (window.PLATONE_GA, set in the standalone file — not in the claude.ai artifact) ---------- */
+function loadGA(id){if(window.__gaOn||!id)return;window.__gaOn=true;
+  const sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);document.head.appendChild(sc);
+  window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config',id);}
+{const box=$('#pv'),ga=window.PLATONE_GA||'',KEY='platone.privacy.v1';let ans=null;try{ans=localStorage.getItem(KEY);}catch(e){}
+  const open=()=>{box.hidden=false;document.body.classList.add('room-open');$('#pvYes').focus();},close=()=>{box.hidden=true;document.body.classList.remove('room-open');};
+  if(ga){box.querySelector('.pv-ga').hidden=false;$('#pvNo').hidden=false;$('#pvYes').textContent='ยอมรับ';}
+  const save=v=>{try{localStorage.setItem(KEY,v);}catch(e){}};
+  $('#pvYes').onclick=()=>{save(ga?'yes':'seen');if(ga)loadGA(ga);close();};
+  $('#pvNo').onclick=()=>{save('no');close();if(window.__gaOn)toast('ปิดการนับผู้ใช้แล้ว จะไม่ทำงานตั้งแต่ครั้งหน้าที่เปิดหน้านี้');};
+  box.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if(ans)close();}});
+  $('#bPrivacy').onclick=open;
+  if(ga&&ans==='yes')loadGA(ga);
+  if((!ans||(ga&&ans==='seen'))&&!/(^|[#&])qa\b/.test(location.hash))setTimeout(open,600);}
+
 if(!window.claude)$('#expStatus').textContent='ส่งออกเป็นไฟล์ .wav ดาวน์โหลดลงเครื่องได้ทันที';
 initAudio();
 setTimeout(()=>{synthDemo().forEach(addTrack);afterTracksChanged();
