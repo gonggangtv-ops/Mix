@@ -4,7 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="PLATONE Studio 1.0 Beta: มิกซ์และมาสเตอร์ปุ่มเดียวในเบราว์เซอร์ พร้อม โดนบี้ (DONBEE Surround Sound) เสียงร้องชัดขึ้นโดยไม่ดังขึ้น และเสียงรอบทิศ">
-<script>window.PLATONE_GA='G-PN0E59RHFP';</script>
+<script>window.PLATONE_GA='G-PN0E59RHFP';window.__gaHead=true;
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PN0E59RHFP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PN0E59RHFP');
+</script>
 <title>PLATONE Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1070,7 +1081,7 @@ body.aura-running #auraSec .card.aura{position:relative;z-index:4}
     <div id="pvD">
       <p><b>ไฟล์เสียงของคุณไม่ออกจากเครื่อง</b> การมิกซ์ มาสเตอร์ โดนบี้ และการลดเสียงรบกวนด้วย AI ทำงานในเบราว์เซอร์ของคุณทั้งหมด ไม่มีการอัปโหลดเพลงหรือเสียงไปที่เซิร์ฟเวอร์ใด</p>
       <p>หน้านี้จำการตั้งค่าเล็กๆ ไว้ในเบราว์เซอร์ของคุณเท่านั้น เช่น โหมดขั้นสูง ขนาดแชนแนล และคำตอบของหน้าต่างนี้</p>
-      <p class="pv-ga" hidden><b>นับจำนวนผู้ใช้ (ถ้าคุณยอมรับ):</b> เราใช้ Google Analytics เพื่อดูว่ามีคนใช้กี่คน Google จะได้ข้อมูลการเข้าชม เช่น หน้าที่เปิด อุปกรณ์ เบราว์เซอร์ ประเทศหรือเมืองโดยประมาณ และใช้คุกกี้ของ Google · ไม่มีชื่อไฟล์หรือเสียงของคุณส่งไปด้วย · ถ้าไม่ยอมรับ แอปยังใช้ได้ครบทุกอย่าง และเปลี่ยนใจได้ทุกเมื่อที่ลิงก์ "ความเป็นส่วนตัว" ท้ายหน้า</p>
+      <p class="pv-ga" hidden><b>นับจำนวนผู้ใช้:</b> เราใช้ Google Analytics เพื่อดูว่ามีคนใช้กี่คน · ถ้ายอมรับ Google จะได้ข้อมูลการเข้าชม เช่น หน้าที่เปิด อุปกรณ์ เบราว์เซอร์ ประเทศหรือเมืองโดยประมาณ และใช้คุกกี้ของ Google · ถ้าไม่ยอมรับ จะไม่มีการตั้งคุกกี้ มีเพียงสัญญาณการเข้าชมแบบไม่ระบุตัวตนที่ไม่เก็บอะไรไว้ในเครื่องคุณ · ไม่มีชื่อไฟล์หรือเสียงของคุณส่งไปด้วย · แอปใช้ได้ครบทุกอย่างไม่ว่าจะเลือกแบบไหน และเปลี่ยนใจได้ทุกเมื่อที่ลิงก์ "ความเป็นส่วนตัว" ท้ายหน้า</p>
     </div>
     <div class="pv-act"><button class="btn" id="pvNo" hidden>ไม่ยอมรับ</button><button class="btn primary" id="pvYes">เข้าใจแล้ว</button></div>
   </div>
@@ -5730,7 +5741,8 @@ if(/(^|[#&])qa\b/.test(location.hash))window.__PLATONE_QA={S,runAura,renderSong,
 readC();renderMaster();renderStyles();buildNR();buildVX();renderAuraUI();dobUI();roomUI();clUI();
 /* ---------- 1.0 Beta: privacy notice; Google Analytics (G-PN0E59RHFP) loads only after the visitor agrees, and only where the page is
    built with it (window.PLATONE_GA, set in the standalone file — not in the claude.ai artifact) ---------- */
-function loadGA(id){if(window.__gaOn||!id)return;window.__gaOn=true;
+function loadGA(id){if(window.__gaHead){window.__gaOn=true;gtag('consent','update',{analytics_storage:'granted'});return;}
+  if(window.__gaOn||!id)return;window.__gaOn=true;
   const sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id);document.head.appendChild(sc);
   window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config',id);}
 {const box=$('#pv'),ga=window.PLATONE_GA||'',KEY='platone.privacy.v1';let ans=null;try{ans=localStorage.getItem(KEY);}catch(e){}
@@ -5738,7 +5750,7 @@ function loadGA(id){if(window.__gaOn||!id)return;window.__gaOn=true;
   if(ga){box.querySelector('.pv-ga').hidden=false;$('#pvNo').hidden=false;$('#pvYes').textContent='ยอมรับ';}
   const save=v=>{try{localStorage.setItem(KEY,v);}catch(e){}};
   $('#pvYes').onclick=()=>{save(ga?'yes':'seen');if(ga)loadGA(ga);close();};
-  $('#pvNo').onclick=()=>{save('no');close();if(window.__gaOn)toast('ปิดการนับผู้ใช้แล้ว จะไม่ทำงานตั้งแต่ครั้งหน้าที่เปิดหน้านี้');};
+  $('#pvNo').onclick=()=>{save('no');if(window.__gaHead)gtag('consent','update',{analytics_storage:'denied'});close();if(window.__gaOn)toast('ปิดการนับผู้ใช้แล้ว จะไม่ทำงานตั้งแต่ครั้งหน้าที่เปิดหน้านี้');};
   box.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if(ans)close();}});
   $('#bPrivacy').onclick=open;
   if(ga&&ans==='yes')loadGA(ga);
